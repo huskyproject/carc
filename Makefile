@@ -31,13 +31,13 @@ install: carc$(EXE)
 	$(INSTALL) $(IBOPT) carc$(EXE) $(BINDIR)
 
 uninstall:
-	-$(RM) $(BINDIR)$(DIRSEP)carc$(EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)carc$(EXE)
 
 clean:
-	-$(RM) *$(OBJ)
-	-$(RM) core
-	-$(RM) *~
+	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) core
+	-$(RM) $(RMOPT) *~
 
 distclean: clean
-	-$(RM) carc$(EXE)
+	-$(RM) $(RMOPT) carc$(EXE)
 
