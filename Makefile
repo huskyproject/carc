@@ -5,7 +5,7 @@ INC	= -I../fidoconfig -I../smapi
 #CFLAGS	= -Wall $(INC) -O2 -g -DUNIX -DDEBUGLEVEL
 CFLAGS	= -Wall $(INC) -DUNIX
 OBJS	= log.o config.o main.o
-RM	= rm
+RM	= rm -f
 
 .c.o: $(CC) -o $*.o $<
 
