@@ -20,23 +20,29 @@ int isError = 0;
 
 int main(int argc, char *argv[])
 {
+    char *logFileName;
+    
+    if (openConfig()) {
+       printf("Error while opening the config file. Bailing out!\n");
+       isError =1;
+    }
+    
+    logFileName = (char *) malloc(strlen(getLogFileDir())+8+1);
+    strcpy(logFileName, getLogFileDir());
+    strcat(logFileName, "carc.log");
+
 #ifdef DEBUGLEVEL
-    if (openLog("carc.log", DEBUG)) {
+    if (openLog(logFileName, DEBUG)) {
         printf("Error opening log file. Bailing out.\n");
     }
 #else
-    if (openLog("carc.log", NORMAL)) {
+    if (openLog(logFileName, NORMAL)) {
         printf("Error opening log file. Bailing out.\n");
     }
 #endif
-
-    if (openConfig()) {
-        addLog(NORMAL, "Error while opening the config file. Bailing out!\n");
-        isError = 1;
-    } else {
-        addLog(DEBUG, "config file done");
-    }
-
+    
+    free(logFileName);
+    
     if (browseArgs(argc, argv)) {
         addLog(NORMAL, "Error while parsing the Commandline");
         isError = 1;

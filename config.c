@@ -6,7 +6,6 @@ int openConfig()
     return !config;
 }
 
-
 char* getProtInbound() {
     return config->protInbound;
 }
