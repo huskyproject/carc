@@ -5,7 +5,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <fidoconfig.h>
+#include <fidoconfig/fidoconfig.h>
 
 s_fidoconfig *config;
 
