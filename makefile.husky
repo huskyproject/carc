@@ -2,17 +2,19 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  CFLAGS	= -Wall -I../smapi -I$(INCDIR) -O2 -g -DDEBUGLEVEL
+  CFLAGS	=  -I../smapi -I$(INCDIR) $(DEBCFLAGS) -DDEBUGLEVEL
+  LFLAGS	= $(DEBLFLAGS)
 else
-  CFLAGS	= -Wall -I../smapi -I$(INCDIR) -O2 -s
+  CFLAGS	=  -I../smapi -I$(INCDIR) $(OPTCFLAGS)
+  LFLAGS	= $(OPTLFLAGS)
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
 ifeq ($(SHORTNAME), 1)
-  LFLAGS=-L$(LIBDIR) -lfidoconf -lsmapi
+  LIBS=-L$(LIBDIR) -lfidoconf -lsmapi
 else
-  LFLAGS=-L$(LIBDIR) -lfidoconfig -lsmapi
+  LIBS=-L$(LIBDIR) -lfidoconfig -lsmapi
 endif
 
 OBJS	= log$(OBJ) config$(OBJ) main$(OBJ)
@@ -23,7 +25,7 @@ OBJS	= log$(OBJ) config$(OBJ) main$(OBJ)
 all: carc$(EXE)
 
 carc$(EXE): $(OBJS)
-	$(CC) $(CFLAGS) $(CDEFS) $(OBJS) -o carc$(EXE) $(LFLAGS)
+	$(CC) $(LFLAGS) $(OBJS) -o carc$(EXE) $(LIBS)
 
 install: carc$(EXE)
 	$(INSTALL) $(IBOPT) carc$(EXE) $(BINDIR)
