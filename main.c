@@ -144,7 +144,7 @@ int doXArc(char fname[12])
         } else if (strstr(header, " ")) {
             printf("is ARC\n");
         } else if (strstr(header, "PK")) {
-            sprintf(cmd, "unzip -Loqq %s%s -d%s", getProtInbound(),
+            sprintf(cmd, "unzip -j -Loqq %s%s -d%s", getProtInbound(),
                     fname, getProtInbound());
         } else if (strstr(header, "lh")) {
             printf("is LHA\n");
