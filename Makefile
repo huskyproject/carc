@@ -30,6 +30,9 @@ carc$(EXE): $(OBJS)
 install: carc$(EXE)
 	$(INSTALL) $(IBOPT) carc$(EXE) $(BINDIR)
 
+uninstall:
+	-$(RM) $(BINDIR)$(DIRSEP)carc$(EXE)
+
 clean:
 	-$(RM) *$(OBJ)
 	-$(RM) core
