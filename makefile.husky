@@ -2,29 +2,37 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  CFLAGS	= -Wall -I$(INCDIR) -O2 -g -DDEBUGLEVEL
+  CFLAGS	= -Wall -I../smapi -I$(INCDIR) -O2 -g -DDEBUGLEVEL
 else
-  CFLAGS	= -Wall -I$(INCDIR) -O2 -s
+  CFLAGS	= -Wall -I../smapi -I$(INCDIR) -O2 -s
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
+ifeq ($(SHORTNAME), 1)
+  LFLAGS=-L$(LIBDIR) -lfidoconf -lsmapi
+else
+  LFLAGS=-L$(LIBDIR) -lfidoconfig -lsmapi
+endif
+
 OBJS	= log$(OBJ) config$(OBJ) main$(OBJ)
-RM	= rm -f
 
-.c$(OBJ): $(CC) -o $*$(OBJ) $<
+.c$(OBJ):
+	$(CC) -c $(CFLAGS) $(CDEFS) -o $*$(OBJ) $<
 
-all: carc
+all: carc$(EXE)
 
-carc: $(OBJS)
-	$(CC) $(CFLAGS) $(CDEFS) $(OBJS) -o carc -L$(LIBDIR) -lfidoconfig -lsmapi
+carc$(EXE): $(OBJS)
+	$(CC) $(CFLAGS) $(CDEFS) $(OBJS) -o carc$(EXE) $(LFLAGS)
 
-install: carc
-	install $(IBOPT) carc $(BINDIR)
+install: carc$(EXE)
+	$(INSTALL) $(IBOPT) carc$(EXE) $(BINDIR)
 
 clean:
-	$(RM) *.o core *~
+	-$(RM) *$(OBJ)
+	-$(RM) core
+	-$(RM) *~
 
 distclean: clean
-	$(RM) carc
+	-$(RM) carc$(EXE)
 
