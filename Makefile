@@ -2,8 +2,8 @@ CC	= gcc
 INC	= -I../fidoconfig -I../smapi
 
 #chose second line to get rid of debug infos
-CFLAGS	= -Wall $(INC) -O2 -g -DUNIX -DDEBUGLEVEL
-#CFLAGS	= -Wall $(INC) -DUNIX
+#CFLAGS	= -Wall $(INC) -O2 -g -DUNIX -DDEBUGLEVEL
+CFLAGS	= -Wall $(INC) -DUNIX
 OBJS	= log.o config.o main.o
 RM	= rm
 
@@ -12,7 +12,7 @@ RM	= rm
 all: carc
 
 carc: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o carc -lfidoconfig -lsmapibsd
+	$(CC) $(CFLAGS) $(OBJS) -o carc -lfidoconfig -lsmapilnx
 
 clean:
 	$(RM) *.o
