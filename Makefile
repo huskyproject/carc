@@ -12,7 +12,7 @@ RM	= rm
 all: carc
 
 carc: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o carc -lfidoconfig -lsmapilnx
+	$(CC) $(CFLAGS) $(OBJS) -o carc -lfidoconfig -lsmapibsd
 
 clean:
 	$(RM) *.o

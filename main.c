@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     }
 
     if (cmdX) {
-        if (doPInbound() == 0) {
+        if (doPInbound() == -1) {
             addLog(NORMAL, "Error while processing the PInbound. Bailing Out");
             isError = 1;
         } else {
@@ -81,17 +81,18 @@ int doPInbound()
     char *logentry;
 
     int errXArc;
-    int xarced = 0;
+    int xarced = -1; /* -1 indicates error */
 
     logentry = malloc(255);
     curdir = malloc(255);
     getcwd(curdir, 255);
 
     addLog(NORMAL, "processing pinbound");
-    xarced = 0;
+    xarced = -1; /* -1 indicates error */
 
     if ((pinbound = opendir(getProtInbound()))) {
         chdir(getProtInbound());
+        xarced++; /* -1 + 1 = 0: no error, but no files extracted yet */
 
         while ((fname=readdir(pinbound))) {
             /* ugly, how is ist done better? */
