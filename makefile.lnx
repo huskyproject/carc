@@ -1,0 +1,32 @@
+# include Husky-Makefile-Config
+include ../huskymak.cfg
+
+CC = gcc
+
+INC	= -I$(INCDIR)
+
+ifeq ($(DEBUG), 1)
+  CFLAGS	= -Wall $(INC) -O2 -g -DUNIX -DDEBUGLEVEL
+else
+  CFLAGS	= -Wall $(INC) -O2 -s -DUNIX
+endif
+
+OBJS	= log.o config.o main.o
+RM	= rm -f
+
+.c.o: $(CC) -o $*.o $<
+
+all: carc
+
+carc: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o carc -L$(LIBDIR) -lfidoconfig -lsmapilnx
+
+install: carc
+	install $(IBOPT) carc $(BINDIR)
+
+clean:
+	$(RM) *.o core *~
+
+distclean: clean
+	$(RM) carc
+
